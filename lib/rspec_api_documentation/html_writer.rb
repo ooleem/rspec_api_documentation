@@ -82,6 +82,8 @@ module RspecApiDocumentation
         hash[:request_headers_text] = format_hash(hash[:request_headers])
         hash[:request_query_parameters_text] = format_hash(hash[:request_query_parameters])
         hash[:response_headers_text] = format_hash(hash[:response_headers])
+        hash[:request_body] = hash[:request_body] ? Rack::Utils.parse_nested_query(hash[:request_body]).to_json : nil
+        hash[:request_content_type] = hash[:request_body] ? "application/json; charset=utf-8" : hash[:request_content_type]
         if @host
           hash[:curl] = hash[:curl].output(@host) if hash[:curl].is_a? RspecApiDocumentation::Curl
         else
